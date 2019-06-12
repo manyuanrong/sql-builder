@@ -2,7 +2,7 @@
 
 [![Build Status](https://www.travis-ci.org/manyuanrong/sql-builder.svg?branch=master)](https://www.travis-ci.org/manyuanrong/sql-builder)
 ![GitHub](https://img.shields.io/github/license/manyuanrong/sql-builder.svg)
-![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/manyuanrong/sql-builder.svg)
+![GitHub release](https://img.shields.io/github/release/manyuanrong/sql-builder.svg)
 ![(Deno)](https://img.shields.io/badge/deno-0.8.0-green.svg)
 
 ### Example
