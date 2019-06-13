@@ -14,7 +14,7 @@ More Useage see:
 
 ```ts
 import { assertEquals, runTests, test } from "./deps.ts";
-import { Query } from "https://deno.land/x/sql-builder@1.1.0/mod.ts";
+import { Query } from "https://deno.land/x/sql-builder@1.2.0/mod.ts";
 
 test(function testQueryInsert() {
   const builder = new Query();
