@@ -1,6 +1,5 @@
 import { assertEquals, test } from "../deps.ts";
-import { Query } from "../query.ts";
-import { Where } from "../where.ts";
+import { Query, Where } from "../mod.ts";
 
 test(function testQueryInsert() {
   const builder = new Query();
