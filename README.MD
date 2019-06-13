@@ -7,12 +7,17 @@
 
 ### Example
 
+More Useage see:
+
+- [Query](./test/query.ts)
+- [Where](./test/where.ts)
+
 ```ts
 import { assertEquals, runTests, test } from "./deps.ts";
-import { QueryBuilder } from "https://deno.land/x/sql-builder@1.1.0/mod.ts";
+import { Query } from "https://deno.land/x/sql-builder@1.1.0/mod.ts";
 
-test(function testQueryBuilderInsert() {
-  const builder = new QueryBuilder();
+test(function testQueryInsert() {
+  const builder = new Query();
   const records = [
     {
       name: "Enok",
@@ -37,8 +42,8 @@ test(function testQueryBuilderInsert() {
   );
 });
 
-test(function testQueryBuilderUpdate() {
-  const builder = new QueryBuilder();
+test(function testQueryUpdate() {
+  const builder = new Query();
   const record = {
     name: "Enok",
     password: "foo",
@@ -56,8 +61,8 @@ test(function testQueryBuilderUpdate() {
   );
 });
 
-test(function testQueryBuilderUpdateWithWhere() {
-  const builder = new QueryBuilder();
+test(function testQueryUpdateWithWhere() {
+  const builder = new Query();
   const record = {
     name: "Enok",
     password: "foo",
@@ -77,8 +82,8 @@ test(function testQueryBuilderUpdateWithWhere() {
   );
 });
 
-test(function testQueryBuilderDelete() {
-  const builder = new QueryBuilder();
+test(function testQueryDelete() {
+  const builder = new Query();
 
   const sql = builder
     .table("users")
@@ -88,8 +93,8 @@ test(function testQueryBuilderDelete() {
   assertEquals(sql.trim(), "DELETE FROM `users`");
 });
 
-test(function testQueryBuilderDeleteWithWhere() {
-  const builder = new QueryBuilder();
+test(function testQueryDeleteWithWhere() {
+  const builder = new Query();
 
   const sql = builder
     .table("users")
@@ -104,8 +109,8 @@ test(function testQueryBuilderDeleteWithWhere() {
   );
 });
 
-test(function testQueryBuilderSelectSimple() {
-  const builder = new QueryBuilder();
+test(function testQuerySelectSimple() {
+  const builder = new Query();
 
   const sql = builder
     .table("users")
@@ -117,8 +122,8 @@ test(function testQueryBuilderSelectSimple() {
   assertEquals(sql.trim(), "SELECT `name`, `id` FROM `users`");
 });
 
-test(function testQueryBuilderSelectWhere() {
-  const builder = new QueryBuilder();
+test(function testQuerySelectWhere() {
+  const builder = new Query();
 
   const sql = builder
     .table("users")
@@ -133,8 +138,8 @@ test(function testQueryBuilderSelectWhere() {
   );
 });
 
-test(function testQueryBuilderSelectOrder() {
-  const builder = new QueryBuilder();
+test(function testQuerySelectOrder() {
+  const builder = new Query();
 
   const sql = builder
     .table("users")
@@ -151,8 +156,8 @@ test(function testQueryBuilderSelectOrder() {
   );
 });
 
-test(function testQueryBuilderSelectJoin() {
-  const builder = new QueryBuilder();
+test(function testQuerySelectJoin() {
+  const builder = new Query();
 
   const sql = builder
     .table("users")
@@ -168,8 +173,8 @@ test(function testQueryBuilderSelectJoin() {
   );
 });
 
-test(function testQueryBuilderSelectLimit() {
-  const builder = new QueryBuilder();
+test(function testQuerySelectLimit() {
+  const builder = new Query();
 
   const sql = builder
     .table("users")
