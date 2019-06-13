@@ -1,12 +1,15 @@
 import { assert, replaceParams } from "./deps.ts";
+import { Where } from "./where.ts";
 
-export class QueryBuilder {
+export class Query {
   private _type: "select" | "insert" | "update" | "delete";
   private _table: string;
   private _where: string[] = [];
   private _joins: string[] = [];
   private _orders: string[] = [];
   private _fields: string[] = [];
+  private _groupBy: string[] = [];
+  private _having: string[] = [];
   private _insertValues: Object[] = [];
   private _updateValue: Object;
   private _limit: { start: number; size: number };
@@ -23,12 +26,26 @@ export class QueryBuilder {
     }
   }
 
+  private get havingSQL() {
+    if (this._having && this._having.length) {
+      return `HAVING ` + this._having.join(" AND ");
+    }
+  }
+
   private get joinSQL() {
     if (this._joins && this._joins.length) {
       return this._joins.join(" ");
     }
   }
 
+  private get groupSQL() {
+    if (this._groupBy && this._groupBy.length) {
+      return (
+        "GROUP BY " +
+        this._groupBy.map(f => replaceParams("??", [f])).join(", ")
+      );
+    }
+  }
   private get limitSQL() {
     if (this._limit) {
       return `LIMIT ${this._limit.start}, ${this._limit.size}`;
@@ -43,6 +60,8 @@ export class QueryBuilder {
       replaceParams("??", [this._table]),
       this.joinSQL,
       this.whereSQL,
+      this.groupSQL,
+      this.havingSQL,
       this.orderSQL,
       this.limitSQL
     ]
@@ -87,16 +106,38 @@ export class QueryBuilder {
     return this;
   }
 
-  order(by: string, order: "DESC" | "ASC" | "desc" | "asc") {
-    this._orders.push(replaceParams(`?? ${order.toUpperCase()}`, [by]));
+  order(by: string) {
+    return {
+      desc: () => {
+        this._orders.push(replaceParams(`?? DESC`, [by]));
+        return this;
+      },
+      asc: () => {
+        this._orders.push(replaceParams(`?? ASC`, [by]));
+        return this;
+      }
+    };
+  }
+
+  groupBy(...fields: string[]) {
+    this._groupBy = fields;
     return this;
   }
 
-  where(key: string, op: string, value?: any) {
-    if (value) {
-      this._where.push(replaceParams(`?? ${op} ?`, [key, value]));
+  where(where: Where | string) {
+    if (typeof where === "string") {
+      this._where.push(where);
     } else {
-      this._where.push(replaceParams(`?? ${op}`, [key]));
+      this._where.push(where.value);
+    }
+    return this;
+  }
+
+  having(where: Where | string) {
+    if (typeof where === "string") {
+      this._having.push(where);
+    } else {
+      this._having.push(where.value);
     }
     return this;
   }
@@ -114,17 +155,17 @@ export class QueryBuilder {
   select(...fields: string[]) {
     this._type = "select";
     assert(fields.length > 0);
-    this._fields = fields.map(field => {
-      if (field === "*") {
-        return "*";
-      } else if (field.toLocaleLowerCase().indexOf(" as ") > -1) {
-        return field;
-      } else if (field.split(".").length > 1) {
-        return replaceParams("??.??", field.split("."));
-      } else {
-        return replaceParams("??", [field]);
-      }
-    });
+    this._fields = this._fields.concat(
+      fields.map(field => {
+        if (field.toLocaleLowerCase().indexOf(" as ") > -1) {
+          return field;
+        } else if (field.split(".").length > 1) {
+          return replaceParams("??.??", field.split("."));
+        } else {
+          return replaceParams("??", [field]);
+        }
+      })
+    );
     return this;
   }
 

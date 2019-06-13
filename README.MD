@@ -9,7 +9,7 @@
 
 ```ts
 import { assertEquals, runTests, test } from "./deps.ts";
-import { QueryBuilder } from "https://deno.land/x/sql-builder@1.0.0/mod.ts";
+import { QueryBuilder } from "https://deno.land/x/sql-builder@1.1.0/mod.ts";
 
 test(function testQueryBuilderInsert() {
   const builder = new QueryBuilder();

@@ -6,6 +6,8 @@ export function replaceParams(sql: string, params: any[]): string {
       const val = params[paramIndex++];
       if (val instanceof Array) {
         return `(${val.map(item => replaceParams("??", [item])).join(",")})`;
+      } else if (val === "*") {
+        return val;
       } else {
         return ["`", val, "`"].join("");
       }
