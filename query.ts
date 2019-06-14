@@ -1,12 +1,14 @@
 import { assert, replaceParams } from "./deps.ts";
+import { Order } from "./order.ts";
 import { Where } from "./where.ts";
+import { Join } from "./join.ts";
 
 export class Query {
   private _type: "select" | "insert" | "update" | "delete";
   private _table: string;
   private _where: string[] = [];
   private _joins: string[] = [];
-  private _orders: string[] = [];
+  private _orders: Order[] = [];
   private _fields: string[] = [];
   private _groupBy: string[] = [];
   private _having: string[] = [];
@@ -16,7 +18,7 @@ export class Query {
 
   private get orderSQL() {
     if (this._orders && this._orders.length) {
-      return `ORDER BY ` + this._orders.join(", ");
+      return `ORDER BY ` + this._orders.map(order => order.value).join(", ");
     }
   }
 
@@ -106,17 +108,9 @@ export class Query {
     return this;
   }
 
-  order(by: string) {
-    return {
-      desc: () => {
-        this._orders.push(replaceParams(`?? DESC`, [by]));
-        return this;
-      },
-      asc: () => {
-        this._orders.push(replaceParams(`?? ASC`, [by]));
-        return this;
-      }
-    };
+  order(...orders: Order[]) {
+    this._orders = this._orders.concat(orders);
+    return this;
   }
 
   groupBy(...fields: string[]) {
@@ -147,8 +141,12 @@ export class Query {
     return this;
   }
 
-  join(join: string) {
-    this._joins.push(join);
+  join(join: Join | string) {
+    if (typeof join === "string") {
+      this._joins.push(join);
+    } else {
+      this._joins.push(join.value);
+    }
     return this;
   }
 

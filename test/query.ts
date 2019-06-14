@@ -1,5 +1,6 @@
 import { assertEquals, test } from "../deps.ts";
-import { Query, Where } from "../mod.ts";
+import { Join } from "../join.ts";
+import { Order, Query, Where } from "../mod.ts";
 
 test(function testQueryInsert() {
   const builder = new Query();
@@ -144,10 +145,7 @@ test(function testQuerySelectOrder() {
     .where(Where.field("id").gt(1))
     .where(Where.field("name").like("%n%"))
     .select("name", "id")
-    .order("id")
-    .desc()
-    .order("name")
-    .asc()
+    .order(Order.by("id").desc, Order.by("name").asc)
     .build();
 
   assertEquals(
@@ -164,12 +162,12 @@ test(function testQuerySelectJoin() {
     .where(Where.field("id").gt(1))
     .where(Where.field("name").like("%n%"))
     .select("users.id", "users.name", "`uses`.`avatar` as `uavatar`")
-    .join("LEFT JOIN posts ON posts.id = users.id")
+    .join(Join.left("posts").on("posts.id", "users.id"))
     .build();
 
   assertEquals(
     sql.trim(),
-    'SELECT `users`.`id`, `users`.`name`, `uses`.`avatar` as `uavatar` FROM `users` LEFT JOIN posts ON posts.id = users.id WHERE `id` > 1 AND `name` LIKE "%n%"'
+    'SELECT `users`.`id`, `users`.`name`, `uses`.`avatar` as `uavatar` FROM `users` LEFT OUTER JOIN `posts` ON `posts`.`id` = `users`.`id` WHERE `id` > 1 AND `name` LIKE "%n%"'
   );
 });
 
