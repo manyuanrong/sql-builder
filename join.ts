@@ -2,7 +2,7 @@ import { replaceParams } from "./util.ts";
 
 export class Join {
   value: string = null;
-  constructor(type: string, table: string, alias?: string) {
+  constructor(type: string, readonly table: string, readonly alias?: string) {
     const name = alias ? "?? ??" : "??";
     this.value = replaceParams(`${type} ${name}`, [table, alias]);
   }
@@ -28,5 +28,3 @@ export class Join {
     return this;
   }
 }
-
-Join.inner("b").on("a.id", "b.id");

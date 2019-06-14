@@ -8,9 +8,19 @@ export function replaceParams(sql: string, params: any[]): string {
         return `(${val.map(item => replaceParams("??", [item])).join(",")})`;
       } else if (val === "*") {
         return val;
-      } else if ((val as string).indexOf(".") > -1) {
-        const _arr = (val as string).split(".");
+      } else if (typeof val === "string" && val.indexOf(".") > -1) {
+        // a.b => `a`.`b`
+        const _arr = val.split(".");
         return replaceParams(_arr.map(() => "??").join("."), _arr);
+      } else if (
+        typeof val === "string" &&
+        (val.toLowerCase().indexOf(" as ") > -1 ||
+          val.toLowerCase().indexOf(" AS ") > -1)
+      ) {
+        // a as b => `a` AS `b`
+        const newVal = val.replace(" as ", " AS ");
+        const _arr = newVal.split(" AS ");
+        return replaceParams(_arr.map(() => "??").join(" AS "), _arr);
       } else {
         return ["`", val, "`"].join("");
       }
