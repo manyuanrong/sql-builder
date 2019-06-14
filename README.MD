@@ -5,16 +5,22 @@
 ![GitHub release](https://img.shields.io/github/release/manyuanrong/sql-builder.svg)
 ![(Deno)](https://img.shields.io/badge/deno-0.8.0-green.svg)
 
-### Example
+### Docs
 
 More Useage see:
 
-- [Query](./test/query.ts)
-- [Where](./test/where.ts)
+- [Query](./docs/query.md)
+- [Where](./docs/where.md)
+- [Order](./docs/order.md)
+- [Join](./docs/join.md)
+
+### [Changes Log](./CHANGELOG.MD)
+
+### Example
 
 ```ts
 import { assertEquals, runTests, test } from "./deps.ts";
-import { Query } from "https://deno.land/x/sql-builder@1.1.0/mod.ts";
+import { Query } from "https://deno.land/x/sql-builder@1.3.0/mod.ts";
 
 test(function testQueryInsert() {
   const builder = new Query();
@@ -114,8 +120,6 @@ test(function testQuerySelectSimple() {
 
   const sql = builder
     .table("users")
-    // .where("id", "=", 1)
-    // .where("name", "like", "%n%")
     .select("name", "id")
     .build();
 
