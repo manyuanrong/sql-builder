@@ -8,6 +8,9 @@ export function replaceParams(sql: string, params: any[]): string {
         return `(${val.map(item => replaceParams("??", [item])).join(",")})`;
       } else if (val === "*") {
         return val;
+      } else if ((val as string).indexOf(".") > -1) {
+        const _arr = (val as string).split(".");
+        return replaceParams(_arr.map(() => "??").join("."), _arr);
       } else {
         return ["`", val, "`"].join("");
       }
