@@ -82,6 +82,13 @@ test(function testWhereLike() {
   assertEquals(Where.field("name").like("%foo%").value, sql);
 });
 
+test(function testWhereBetween() {
+  const sql = "`age` BETWEEN 18 AND 40";
+  assertEquals(Where.expr("?? BETWEEN ? AND ?", "age", 18, 40).value, sql);
+  assertEquals(Where.between("age", 18, 40).value, sql);
+  assertEquals(Where.field("age").between(18, 40).value, sql);
+});
+
 test(function testWhereAnd() {
   const sql = "(`age1` = 1 AND `age2` = 2 AND `age3` = 3)";
   assertEquals(

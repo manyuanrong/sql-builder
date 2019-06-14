@@ -78,6 +78,10 @@ export class Where {
     return this.expr("?? LIKE ?", field, value);
   }
 
+  static between(field: string, startValue: any, endValue: any) {
+    return this.expr("?? BETWEEN ? AND ?", field, startValue, endValue);
+  }
+
   static field(name: string) {
     return {
       gt: (value: any) => this.gt(name, value),
@@ -90,7 +94,8 @@ export class Where {
       notNull: () => this.notNull(name),
       in: (...values: any[]) => this.in(name, ...values),
       notIn: (...values: any[]) => this.notIn(name, ...values),
-      like: (value: any) => this.like(name, value)
+      like: (value: any) => this.like(name, value),
+      between: (start: any, end: any) => this.between(name, start, end)
     };
   }
 
