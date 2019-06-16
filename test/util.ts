@@ -1,6 +1,15 @@
 import { assertEquals, replaceParams, test } from "../deps.ts";
 
 test(function testIdReplace() {
+  assertEquals(
+    replaceParams(`'??' "??" ?? ?`, ["a", "b"]),
+    `'??' "??" \`a\` "b"`
+  );
+
+  assertEquals(replaceParams("?? ?", null), "?? ?");
+  assertEquals(replaceParams("?? ?", []), "?? ?");
+  assertEquals(replaceParams("?? ?", [null, null]), "`` NULL");
+
   assertEquals(replaceParams("??", ["user.id"]), "`user`.`id`");
   assertEquals(replaceParams("??", ["user.*"]), "`user`.*");
   assertEquals(
@@ -12,7 +21,6 @@ test(function testIdReplace() {
   assertEquals(replaceParams("??", ["id"]), "`id`");
   assertEquals(replaceParams("??", [1]), "`1`");
   assertEquals(replaceParams("??", [true]), "`true`");
-  assertEquals(replaceParams("??", []), "``");
   assertEquals(replaceParams("?", ["string"]), `"string"`);
   assertEquals(replaceParams("?", [123]), `123`);
   assertEquals(
