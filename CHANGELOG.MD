@@ -1,5 +1,11 @@
 # Chnage log
 
+## 1.3.4
+
+### upgrade testing std lib
+
+Fix bug
+
 ## 1.3.3
 
 ### Fixes
