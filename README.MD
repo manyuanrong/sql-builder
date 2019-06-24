@@ -3,7 +3,7 @@
 [![Build Status](https://www.travis-ci.org/manyuanrong/sql-builder.svg?branch=master)](https://www.travis-ci.org/manyuanrong/sql-builder)
 ![GitHub](https://img.shields.io/github/license/manyuanrong/sql-builder.svg)
 ![GitHub release](https://img.shields.io/github/release/manyuanrong/sql-builder.svg)
-![(Deno)](https://img.shields.io/badge/deno-0.8.0-green.svg)
+![(Deno)](https://img.shields.io/badge/deno-0.9.0-green.svg)
 
 ### Docs
 
@@ -20,7 +20,7 @@ More Useage see:
 
 ```ts
 import { assertEquals, runTests, test } from "./deps.ts";
-import { Query } from "https://deno.land/x/sql-builder@1.3.4/mod.ts";
+import { Query } from "https://deno.land/x/sql-builder@1.3.5/mod.ts";
 
 test(function testQueryInsert() {
   const builder = new Query();

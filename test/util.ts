@@ -1,5 +1,14 @@
 import { assertEquals, replaceParams, test } from "../deps.ts";
 
+test(function testReplaceDate() {
+  const date = new Date("2019-01-01 12:12:12");
+  assertEquals(replaceParams("?", [date]), `"2019-01-01 12:12:12"`);
+  assertEquals(
+    replaceParams("?", [new Date(1551244259181)]),
+    `"2019-02-27 13:10:59"`
+  );
+});
+
 test(function testIdReplace() {
   assertEquals(
     replaceParams(`'??' "??" ?? ?`, ["a", "b"]),
@@ -23,10 +32,6 @@ test(function testIdReplace() {
   assertEquals(replaceParams("??", [true]), "`true`");
   assertEquals(replaceParams("?", ["string"]), `"string"`);
   assertEquals(replaceParams("?", [123]), `123`);
-  assertEquals(
-    replaceParams("?", [new Date(1551244259181)]),
-    `2019-02-27 13:10:59`
-  );
   assertEquals(replaceParams("?", [`"test"`]), '"\\"test\\""');
   assertEquals(replaceParams("?", [["a", "b", "c", "d"]]), '("a","b","c","d")');
   assertEquals(replaceParams("?", [[1, 2, 3, 4]]), "(1,2,3,4)");

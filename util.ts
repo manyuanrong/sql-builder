@@ -36,7 +36,7 @@ export function replaceParams(sql: string, params: any[]): string {
     if (val === null) return "NULL";
     switch (typeof val) {
       case "object":
-        if (val instanceof Date) return formatDate(val);
+        if (val instanceof Date) return `"${formatDate(val)}"`;
         if (val instanceof Array) {
           return `(${val.map(item => replaceParams("?", [item])).join(",")})`;
         }
