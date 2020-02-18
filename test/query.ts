@@ -2,7 +2,7 @@ import { assertEquals, test } from "../deps.ts";
 import { Join } from "../join.ts";
 import { Order, Query, Where } from "../mod.ts";
 
-test(function testQueryInsert() {
+Deno.test(function testQueryInsert() {
   const builder = new Query();
   const records = [
     {

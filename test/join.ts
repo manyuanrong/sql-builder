@@ -1,7 +1,7 @@
 import { assertEquals, test } from "../deps.ts";
 import { Join } from "../join.ts";
 
-test(function testInnerJoin() {
+Deno.test(function testInnerJoin() {
   assertEquals(
     Join.inner("users").on("other.id", "users.id").value,
     "INNER JOIN `users` ON `other`.`id` = `users`.`id`"
@@ -12,7 +12,7 @@ test(function testInnerJoin() {
   );
 });
 
-test(function testLeftJoin() {
+Deno.test(function testLeftJoin() {
   assertEquals(
     Join.left("users").on("other.id", "users.id").value,
     "LEFT OUTER JOIN `users` ON `other`.`id` = `users`.`id`"
@@ -23,7 +23,7 @@ test(function testLeftJoin() {
   );
 });
 
-test(function testRightJoin() {
+Deno.test(function testRightJoin() {
   assertEquals(
     Join.right("users").on("other.id", "users.id").value,
     "RIGHT OUTER JOIN `users` ON `other`.`id` = `users`.`id`"
@@ -34,7 +34,7 @@ test(function testRightJoin() {
   );
 });
 
-test(function testFullJoin() {
+Deno.test(function testFullJoin() {
   assertEquals(
     Join.full("users").on("other.id", "users.id").value,
     "FULL OUTER JOIN `users` ON `other`.`id` = `users`.`id`"

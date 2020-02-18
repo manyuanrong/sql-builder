@@ -22,7 +22,7 @@ More Useage see:
 import { assertEquals, runTests, test } from "./deps.ts";
 import { Query } from "https://deno.land/x/sql-builder@1.3.5/mod.ts";
 
-test(function testQueryInsert() {
+Deno.test(function testQueryInsert() {
   const builder = new Query();
   const records = [
     {
@@ -48,7 +48,7 @@ test(function testQueryInsert() {
   );
 });
 
-test(function testQueryUpdate() {
+Deno.test(function testQueryUpdate() {
   const builder = new Query();
   const record = {
     name: "Enok",
@@ -67,7 +67,7 @@ test(function testQueryUpdate() {
   );
 });
 
-test(function testQueryUpdateWithWhere() {
+Deno.test(function testQueryUpdateWithWhere() {
   const builder = new Query();
   const record = {
     name: "Enok",
@@ -88,7 +88,7 @@ test(function testQueryUpdateWithWhere() {
   );
 });
 
-test(function testQueryDelete() {
+Deno.test(function testQueryDelete() {
   const builder = new Query();
 
   const sql = builder
@@ -99,7 +99,7 @@ test(function testQueryDelete() {
   assertEquals(sql.trim(), "DELETE FROM `users`");
 });
 
-test(function testQueryDeleteWithWhere() {
+Deno.test(function testQueryDeleteWithWhere() {
   const builder = new Query();
 
   const sql = builder
@@ -115,7 +115,7 @@ test(function testQueryDeleteWithWhere() {
   );
 });
 
-test(function testQuerySelectSimple() {
+Deno.test(function testQuerySelectSimple() {
   const builder = new Query();
 
   const sql = builder
@@ -126,7 +126,7 @@ test(function testQuerySelectSimple() {
   assertEquals(sql.trim(), "SELECT `name`, `id` FROM `users`");
 });
 
-test(function testQuerySelectWhere() {
+Deno.test(function testQuerySelectWhere() {
   const builder = new Query();
 
   const sql = builder
@@ -142,7 +142,7 @@ test(function testQuerySelectWhere() {
   );
 });
 
-test(function testQuerySelectOrder() {
+Deno.test(function testQuerySelectOrder() {
   const builder = new Query();
 
   const sql = builder
@@ -160,7 +160,7 @@ test(function testQuerySelectOrder() {
   );
 });
 
-test(function testQuerySelectJoin() {
+Deno.test(function testQuerySelectJoin() {
   const builder = new Query();
 
   const sql = builder
@@ -177,7 +177,7 @@ test(function testQuerySelectJoin() {
   );
 });
 
-test(function testQuerySelectLimit() {
+Deno.test(function testQuerySelectLimit() {
   const builder = new Query();
 
   const sql = builder
@@ -194,5 +194,5 @@ test(function testQuerySelectLimit() {
   );
 });
 
-runTests();
+Deno.runTests();
 ```

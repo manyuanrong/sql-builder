@@ -1,6 +1,6 @@
 import { assertEquals, replaceParams, test } from "../deps.ts";
 
-test(function testReplaceDate() {
+Deno.test(function testReplaceDate() {
   const date = new Date("2019-01-01 12:12:12");
   assertEquals(replaceParams("?", [date]), `"2019-01-01 12:12:12"`);
   assertEquals(
@@ -9,7 +9,7 @@ test(function testReplaceDate() {
   );
 });
 
-test(function testIdReplace() {
+Deno.test(function testIdReplace() {
   assertEquals(
     replaceParams(`'??' "??" ?? ?`, ["a", "b"]),
     `'??' "??" \`a\` "b"`
