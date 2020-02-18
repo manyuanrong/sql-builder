@@ -5,7 +5,7 @@ Deno.test(function testReplaceDate() {
   assertEquals(replaceParams("?", [date]), `"2019-01-01 12:12:12"`);
   assertEquals(
     replaceParams("?", [new Date(1551244259181)]),
-    `"2019-02-27 14:10:59"`
+    `"2019-02-27 13:10:59"`
   );
 });
 
