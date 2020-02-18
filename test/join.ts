@@ -1,4 +1,4 @@
-import { assertEquals, test } from "../deps.ts";
+import { assertEquals } from "../deps.ts";
 import { Join } from "../join.ts";
 
 Deno.test(function testInnerJoin() {

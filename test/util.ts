@@ -1,4 +1,4 @@
-import { assertEquals, replaceParams, test } from "../deps.ts";
+import { assertEquals, replaceParams } from "../deps.ts";
 
 Deno.test(function testReplaceDate() {
   const date = new Date("2019-01-01 12:12:12");

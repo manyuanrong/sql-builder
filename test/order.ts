@@ -1,4 +1,4 @@
-import { assertEquals, test } from "../deps.ts";
+import { assertEquals } from "../deps.ts";
 import { Order } from "../order.ts";
 
 Deno.test(function testOrderBuilder() {

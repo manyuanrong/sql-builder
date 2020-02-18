@@ -1,4 +1,4 @@
-import { assertEquals, test } from "../deps.ts";
+import { assertEquals } from "../deps.ts";
 import { Join } from "../join.ts";
 import { Order, Query, Where } from "../mod.ts";
 
@@ -28,7 +28,7 @@ Deno.test(function testQueryInsert() {
   );
 });
 
-test(function testQueryUpdate() {
+Deno.test(function testQueryUpdate() {
   const builder = new Query();
   const record = {
     name: "Enok",
@@ -47,7 +47,7 @@ test(function testQueryUpdate() {
   );
 });
 
-test(function testQueryUpdateWithWhere() {
+Deno.test(function testQueryUpdateWithWhere() {
   const builder = new Query();
   const record = {
     name: "Enok",
@@ -68,7 +68,7 @@ test(function testQueryUpdateWithWhere() {
   );
 });
 
-test(function testQueryDelete() {
+Deno.test(function testQueryDelete() {
   const builder = new Query();
 
   const sql = builder
@@ -79,7 +79,7 @@ test(function testQueryDelete() {
   assertEquals(sql.trim(), "DELETE FROM `users`");
 });
 
-test(function testQueryDeleteWithWhere() {
+Deno.test(function testQueryDeleteWithWhere() {
   const builder = new Query();
 
   const sql = builder
@@ -95,7 +95,7 @@ test(function testQueryDeleteWithWhere() {
   );
 });
 
-test(function testQuerySelectSimple() {
+Deno.test(function testQuerySelectSimple() {
   const builder = new Query();
 
   const sql = builder
@@ -106,7 +106,7 @@ test(function testQuerySelectSimple() {
   assertEquals(sql.trim(), "SELECT `name`, `id` FROM `users`");
 });
 
-test(function testQuerySelectGroupBy() {
+Deno.test(function testQuerySelectGroupBy() {
   const builder = new Query();
 
   const sql = builder
@@ -122,7 +122,7 @@ test(function testQuerySelectGroupBy() {
   );
 });
 
-test(function testQuerySelectWhere() {
+Deno.test(function testQuerySelectWhere() {
   const builder = new Query();
 
   const sql = builder
@@ -137,7 +137,7 @@ test(function testQuerySelectWhere() {
   );
 });
 
-test(function testQuerySelectOrder() {
+Deno.test(function testQuerySelectOrder() {
   const builder = new Query();
 
   const sql = builder
@@ -154,7 +154,7 @@ test(function testQuerySelectOrder() {
   );
 });
 
-test(function testQuerySelectJoin() {
+Deno.test(function testQuerySelectJoin() {
   const builder = new Query();
 
   const sql = builder
@@ -171,7 +171,7 @@ test(function testQuerySelectJoin() {
   );
 });
 
-test(function testQuerySelectLimit() {
+Deno.test(function testQuerySelectLimit() {
   const builder = new Query();
 
   const sql = builder

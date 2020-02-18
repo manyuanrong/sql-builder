@@ -1,4 +1,4 @@
-import { assertEquals, test } from "../deps.ts";
+import { assertEquals } from "../deps.ts";
 import { Where } from "../mod.ts";
 
 Deno.test(function testWhereEq() {
