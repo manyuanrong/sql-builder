@@ -1,5 +1,7 @@
-import { assertEquals, test } from "../deps.ts";
+import { assertEquals } from "../deps.ts";
 import { Where } from "../mod.ts";
+
+const { test } = Deno;
 
 test(function testWhereEq() {
   const sql = '`name` = "foo"';

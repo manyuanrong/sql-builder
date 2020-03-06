@@ -1,5 +1,7 @@
-import { assertEquals, test } from "../deps.ts";
+import { assertEquals } from "../deps.ts";
 import { Order } from "../order.ts";
+
+const { test } = Deno;
 
 test(function testOrderBuilder() {
   assertEquals(Order.by("name").desc.value, "`name` DESC");

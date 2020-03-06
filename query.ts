@@ -4,17 +4,17 @@ import { Where } from "./where.ts";
 import { Join } from "./join.ts";
 
 export class Query {
-  private _type: "select" | "insert" | "update" | "delete";
-  private _table: string;
+  private _type?: "select" | "insert" | "update" | "delete";
+  private _table?: string;
   private _where: string[] = [];
   private _joins: string[] = [];
   private _orders: Order[] = [];
   private _fields: string[] = [];
   private _groupBy: string[] = [];
   private _having: string[] = [];
-  private _insertValues: Object[] = [];
-  private _updateValue: Object;
-  private _limit: { start: number; size: number };
+  private _insertValues: any[] = [];
+  private _updateValue?: any;
+  private _limit?: { start: number; size: number };
 
   private get orderSQL() {
     if (this._orders && this._orders.length) {
@@ -75,7 +75,7 @@ export class Query {
     const len = this._insertValues.length;
     const fields = Object.keys(this._insertValues[0]);
     const values = this._insertValues.map(row => {
-      return fields.map(key => row[key]);
+      return fields.map(key => row[key]!);
     });
     return replaceParams(`INSERT INTO ?? ?? VALUES ${"? ".repeat(len)}`, [
       this._table,
@@ -199,6 +199,8 @@ export class Query {
         return this.updateSQL;
       case "delete":
         return this.deleteSQL;
+      default:
+        return "";
     }
   }
 }

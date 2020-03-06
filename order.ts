@@ -1,7 +1,7 @@
 import { replaceParams } from "./util.ts";
 
 export class Order {
-  value: string;
+  value: string = "";
   static by(field: string) {
     const order = new Order();
     return {

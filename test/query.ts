@@ -1,6 +1,8 @@
-import { assertEquals, test } from "../deps.ts";
+import { assertEquals } from "../deps.ts";
 import { Join } from "../join.ts";
 import { Order, Query, Where } from "../mod.ts";
+
+const { test } = Deno;
 
 test(function testQueryInsert() {
   const builder = new Query();

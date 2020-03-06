@@ -31,7 +31,7 @@ export class Where {
    * eq from object
    * @param data
    */
-  static from(data: Object): Where {
+  static from(data: any): Where {
     const conditions = Object.keys(data).map(key => this.eq(key, data[key]));
     return this.and(...conditions);
   }
@@ -99,18 +99,18 @@ export class Where {
     };
   }
 
-  static and(...expr: Where[]): Where {
+  static and(...expr: (null | undefined | Where)[]): Where {
     const sql = `(${expr
       .filter(e => e)
-      .map(e => e.value)
+      .map(e => e!.value)
       .join(" AND ")})`;
     return new Where(sql, []);
   }
 
-  static or(...expr: Where[]): Where {
+  static or(...expr: (null | undefined | Where)[]): Where {
     const sql = `(${expr
       .filter(e => e)
-      .map(e => e.value)
+      .map(e => e!.value)
       .join(" OR ")})`;
     return new Where(sql, []);
   }

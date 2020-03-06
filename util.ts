@@ -1,4 +1,4 @@
-export function replaceParams(sql: string, params: any[]): string {
+export function replaceParams(sql: string, params: any | any[]): string {
   if (!params) return sql;
   let paramIndex = 0;
   sql = sql.replace(/('.*')|(".*")|(\?\?)|(\?)/g, str => {

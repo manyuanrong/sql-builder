@@ -1,7 +1,7 @@
 import { replaceParams } from "./util.ts";
 
 export class Join {
-  value: string = null;
+  value: string = "";
   constructor(type: string, readonly table: string, readonly alias?: string) {
     const name = alias ? "?? ??" : "??";
     this.value = replaceParams(`${type} ${name}`, [table, alias]);
