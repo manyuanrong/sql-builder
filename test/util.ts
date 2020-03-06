@@ -5,10 +5,6 @@ const { test } = Deno;
 test(function testReplaceDate() {
   const date = new Date("2019-01-01 12:12:12");
   assertEquals(replaceParams("?", [date]), `"2019-01-01 12:12:12"`);
-  assertEquals(
-    replaceParams("?", [new Date(1551244259181)]),
-    `"2019-02-27 13:10:59"`
-  );
 });
 
 test(function testIdReplace() {
