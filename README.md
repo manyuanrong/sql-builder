@@ -20,7 +20,7 @@ More Useage see:
 
 ```ts
 import { assertEquals, runTests, test } from "./deps.ts";
-import { Query } from "https://deno.land/x/sql-builder@1.3.5/mod.ts";
+import { Query } from "https://deno.land/x/sql_builder/mod.ts";
 
 test(function testQueryInsert() {
   const builder = new Query();
