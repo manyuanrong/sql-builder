@@ -18,7 +18,7 @@ export class Query {
 
   private get orderSQL() {
     if (this._orders && this._orders.length) {
-      return `ORDER BY ` + this._orders.map(order => order.value).join(", ");
+      return `ORDER BY ` + this._orders.map((order) => order.value).join(", ");
     }
   }
 
@@ -44,7 +44,7 @@ export class Query {
     if (this._groupBy && this._groupBy.length) {
       return (
         "GROUP BY " +
-        this._groupBy.map(f => replaceParams("??", [f])).join(", ")
+        this._groupBy.map((f) => replaceParams("??", [f])).join(", ")
       );
     }
   }
@@ -65,41 +65,41 @@ export class Query {
       this.groupSQL,
       this.havingSQL,
       this.orderSQL,
-      this.limitSQL
+      this.limitSQL,
     ]
-      .filter(str => str)
+      .filter((str) => str)
       .join(" ");
   }
 
   private get insertSQL() {
     const len = this._insertValues.length;
     const fields = Object.keys(this._insertValues[0]);
-    const values = this._insertValues.map(row => {
-      return fields.map(key => row[key]!);
+    const values = this._insertValues.map((row) => {
+      return fields.map((key) => row[key]!);
     });
     return replaceParams(`INSERT INTO ?? ?? VALUES ${"? ".repeat(len)}`, [
       this._table,
       fields,
-      ...values
+      ...values,
     ]);
   }
 
   private get updateSQL() {
     assert(!!this._updateValue);
     const set = Object.keys(this._updateValue)
-      .map(key => {
+      .map((key) => {
         return replaceParams(`?? = ?`, [key, this._updateValue[key]]);
       })
       .join(", ");
     return [
       replaceParams(`UPDATE ?? SET ${set}`, [this._table]),
-      this.whereSQL
+      this.whereSQL,
     ].join(" ");
   }
 
   private get deleteSQL() {
     return [replaceParams(`DELETE FROM ??`, [this._table]), this.whereSQL].join(
-      " "
+      " ",
     );
   }
 
@@ -154,7 +154,7 @@ export class Query {
     this._type = "select";
     assert(fields.length > 0);
     this._fields = this._fields.concat(
-      fields.map(field => {
+      fields.map((field) => {
         if (field.toLocaleLowerCase().indexOf(" as ") > -1) {
           return field;
         } else if (field.split(".").length > 1) {
@@ -162,7 +162,7 @@ export class Query {
         } else {
           return replaceParams("??", [field]);
         }
-      })
+      }),
     );
     return this;
   }

@@ -1,7 +1,7 @@
 export function replaceParams(sql: string, params: any | any[]): string {
   if (!params) return sql;
   let paramIndex = 0;
-  sql = sql.replace(/('.*')|(".*")|(\?\?)|(\?)/g, str => {
+  sql = sql.replace(/('.*')|(".*")|(\?\?)|(\?)/g, (str) => {
     if (paramIndex >= params.length) return str;
     // ignore
     if (/".*"/g.test(str) || /'.*'/g.test(str)) {
@@ -11,7 +11,7 @@ export function replaceParams(sql: string, params: any | any[]): string {
     if (str === "??") {
       const val = params[paramIndex++];
       if (val instanceof Array) {
-        return `(${val.map(item => replaceParams("??", [item])).join(",")})`;
+        return `(${val.map((item) => replaceParams("??", [item])).join(",")})`;
       } else if (val === "*") {
         return val;
       } else if (typeof val === "string" && val.indexOf(".") > -1) {
@@ -38,7 +38,7 @@ export function replaceParams(sql: string, params: any | any[]): string {
       case "object":
         if (val instanceof Date) return `"${formatDate(val)}"`;
         if (val instanceof Array) {
-          return `(${val.map(item => replaceParams("?", [item])).join(",")})`;
+          return `(${val.map((item) => replaceParams("?", [item])).join(",")})`;
         }
       case "string":
         return `"${escapeString(val)}"`;

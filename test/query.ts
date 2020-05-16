@@ -4,57 +4,51 @@ import { Order, Query, Where } from "../mod.ts";
 
 const { test } = Deno;
 
-test(function testQueryInsert() {
+test("testQueryInsert", function () {
   const builder = new Query();
   const records = [
     {
       name: "Enok",
       password: "foo",
-      id: 1
+      id: 1,
     },
     {
       id: 2,
       name: "Man",
-      password: "bar"
-    }
+      password: "bar",
+    },
   ];
 
-  const sql = builder
-    .table("users")
-    .insert(records)
-    .build();
+  const sql = builder.table("users").insert(records).build();
 
   assertEquals(
     sql.trim(),
-    'INSERT INTO `users` (`name`,`password`,`id`) VALUES ("Enok","foo",1) ("Man","bar",2)'
+    'INSERT INTO `users` (`name`,`password`,`id`) VALUES ("Enok","foo",1) ("Man","bar",2)',
   );
 });
 
-test(function testQueryUpdate() {
+test("testQueryUpdate", function () {
   const builder = new Query();
   const record = {
     name: "Enok",
     password: "foo",
-    id: 1
+    id: 1,
   };
 
-  const sql = builder
-    .table("users")
-    .update(record)
-    .build();
+  const sql = builder.table("users").update(record).build();
 
   assertEquals(
     sql.trim(),
-    'UPDATE `users` SET `name` = "Enok", `password` = "foo", `id` = 1'
+    'UPDATE `users` SET `name` = "Enok", `password` = "foo", `id` = 1',
   );
 });
 
-test(function testQueryUpdateWithWhere() {
+test("testQueryUpdateWithWhere", function () {
   const builder = new Query();
   const record = {
     name: "Enok",
     password: "foo",
-    id: 1
+    id: 1,
   };
 
   const sql = builder
@@ -66,22 +60,19 @@ test(function testQueryUpdateWithWhere() {
 
   assertEquals(
     sql.trim(),
-    'UPDATE `users` SET `name` = "Enok", `password` = "foo", `id` = 1 WHERE `id` = 1 AND `name` LIKE "%n%"'
+    'UPDATE `users` SET `name` = "Enok", `password` = "foo", `id` = 1 WHERE `id` = 1 AND `name` LIKE "%n%"',
   );
 });
 
-test(function testQueryDelete() {
+test("testQueryDelete", function () {
   const builder = new Query();
 
-  const sql = builder
-    .table("users")
-    .delete()
-    .build();
+  const sql = builder.table("users").delete().build();
 
   assertEquals(sql.trim(), "DELETE FROM `users`");
 });
 
-test(function testQueryDeleteWithWhere() {
+test("testQueryDeleteWithWhere", function () {
   const builder = new Query();
 
   const sql = builder
@@ -93,22 +84,19 @@ test(function testQueryDeleteWithWhere() {
 
   assertEquals(
     sql.trim(),
-    'DELETE FROM `users` WHERE `id` = 1 AND `name` LIKE "%n%"'
+    'DELETE FROM `users` WHERE `id` = 1 AND `name` LIKE "%n%"',
   );
 });
 
-test(function testQuerySelectSimple() {
+test("testQuerySelectSimple", function () {
   const builder = new Query();
 
-  const sql = builder
-    .table("users")
-    .select("name", "id")
-    .build();
+  const sql = builder.table("users").select("name", "id").build();
 
   assertEquals(sql.trim(), "SELECT `name`, `id` FROM `users`");
 });
 
-test(function testQuerySelectGroupBy() {
+test("testQuerySelectGroupBy", function () {
   const builder = new Query();
 
   const sql = builder
@@ -120,11 +108,11 @@ test(function testQuerySelectGroupBy() {
 
   assertEquals(
     sql.trim(),
-    "SELECT `name`, `id`, `type` FROM `users` GROUP BY `type` HAVING `type` NOT IN (1,2)"
+    "SELECT `name`, `id`, `type` FROM `users` GROUP BY `type` HAVING `type` NOT IN (1,2)",
   );
 });
 
-test(function testQuerySelectWhere() {
+test("testQuerySelectWhere", function () {
   const builder = new Query();
 
   const sql = builder
@@ -135,11 +123,11 @@ test(function testQuerySelectWhere() {
 
   assertEquals(
     sql.trim(),
-    'SELECT `name`, `id` FROM `users` WHERE (`id` > 1 AND `name` LIKE "%n%")'
+    'SELECT `name`, `id` FROM `users` WHERE (`id` > 1 AND `name` LIKE "%n%")',
   );
 });
 
-test(function testQuerySelectOrder() {
+test("testQuerySelectOrder", function () {
   const builder = new Query();
 
   const sql = builder
@@ -152,11 +140,11 @@ test(function testQuerySelectOrder() {
 
   assertEquals(
     sql.trim(),
-    'SELECT `name`, `id` FROM `users` WHERE `id` > 1 AND `name` LIKE "%n%" ORDER BY `id` DESC, `name` ASC'
+    'SELECT `name`, `id` FROM `users` WHERE `id` > 1 AND `name` LIKE "%n%" ORDER BY `id` DESC, `name` ASC',
   );
 });
 
-test(function testQuerySelectJoin() {
+test("testQuerySelectJoin", function () {
   const builder = new Query();
 
   const sql = builder
@@ -169,11 +157,11 @@ test(function testQuerySelectJoin() {
 
   assertEquals(
     sql.trim(),
-    'SELECT `users`.`id`, `users`.`name`, `uses`.`avatar` as `uavatar` FROM `users` LEFT OUTER JOIN `posts` ON `posts`.`id` = `users`.`id` WHERE `id` > 1 AND `name` LIKE "%n%"'
+    'SELECT `users`.`id`, `users`.`name`, `uses`.`avatar` as `uavatar` FROM `users` LEFT OUTER JOIN `posts` ON `posts`.`id` = `users`.`id` WHERE `id` > 1 AND `name` LIKE "%n%"',
   );
 });
 
-test(function testQuerySelectLimit() {
+test("testQuerySelectLimit", function () {
   const builder = new Query();
 
   const sql = builder
@@ -186,6 +174,6 @@ test(function testQuerySelectLimit() {
 
   assertEquals(
     sql.trim(),
-    'SELECT * FROM `users` WHERE `id` > 1 AND `name` LIKE "%n%" LIMIT 0, 10'
+    'SELECT * FROM `users` WHERE `id` > 1 AND `name` LIKE "%n%" LIMIT 0, 10',
   );
 });

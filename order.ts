@@ -12,7 +12,7 @@ export class Order {
       get asc() {
         order.value = replaceParams("?? ASC", [field]);
         return order;
-      }
+      },
     };
   }
 }

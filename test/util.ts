@@ -2,15 +2,15 @@ import { assertEquals, replaceParams } from "../deps.ts";
 
 const { test } = Deno;
 
-test(function testReplaceDate() {
+test("testReplaceDate", function () {
   const date = new Date("2019-01-01 12:12:12");
   assertEquals(replaceParams("?", [date]), `"2019-01-01 12:12:12"`);
 });
 
-test(function testIdReplace() {
+test("testIdReplace", function () {
   assertEquals(
     replaceParams(`'??' "??" ?? ?`, ["a", "b"]),
-    `'??' "??" \`a\` "b"`
+    `'??' "??" \`a\` "b"`,
   );
 
   assertEquals(replaceParams("?? ?", null), "?? ?");
@@ -21,7 +21,7 @@ test(function testIdReplace() {
   assertEquals(replaceParams("??", ["user.*"]), "`user`.*");
   assertEquals(
     replaceParams("??", ["user.id as user_id"]),
-    "`user`.`id` AS `user_id`"
+    "`user`.`id` AS `user_id`",
   );
 
   assertEquals(replaceParams("?? ?", ["id", "val"]), '`id` "val"');
@@ -39,15 +39,15 @@ test(function testIdReplace() {
   assertEquals(replaceParams("??", [keys]), "(`a`,`b`,`c`)");
   assertEquals(
     replaceParams("??", [Object.keys({ a: 1, b: 1, c: 1 })]),
-    "(`a`,`b`,`c`)"
+    "(`a`,`b`,`c`)",
   );
 
   const query = replaceParams(
     `select ??, ?? from ?? where ?? = ? and ?? = ? and is_admin = ?`,
-    ["name", "email", "users", "id", 1, "name", "manyuanrong", true]
+    ["name", "email", "users", "id", 1, "name", "manyuanrong", true],
   );
   assertEquals(
     query,
-    'select `name`, `email` from `users` where `id` = 1 and `name` = "manyuanrong" and is_admin = true'
+    'select `name`, `email` from `users` where `id` = 1 and `name` = "manyuanrong" and is_admin = true',
   );
 });

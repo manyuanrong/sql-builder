@@ -32,7 +32,7 @@ export class Where {
    * @param data
    */
   static from(data: any): Where {
-    const conditions = Object.keys(data).map(key => this.eq(key, data[key]));
+    const conditions = Object.keys(data).map((key) => this.eq(key, data[key]));
     return this.and(...conditions);
   }
 
@@ -95,23 +95,27 @@ export class Where {
       in: (...values: any[]) => this.in(name, ...values),
       notIn: (...values: any[]) => this.notIn(name, ...values),
       like: (value: any) => this.like(name, value),
-      between: (start: any, end: any) => this.between(name, start, end)
+      between: (start: any, end: any) => this.between(name, start, end),
     };
   }
 
   static and(...expr: (null | undefined | Where)[]): Where {
-    const sql = `(${expr
-      .filter(e => e)
-      .map(e => e!.value)
-      .join(" AND ")})`;
+    const sql = `(${
+      expr
+        .filter((e) => e)
+        .map((e) => e!.value)
+        .join(" AND ")
+    })`;
     return new Where(sql, []);
   }
 
   static or(...expr: (null | undefined | Where)[]): Where {
-    const sql = `(${expr
-      .filter(e => e)
-      .map(e => e!.value)
-      .join(" OR ")})`;
+    const sql = `(${
+      expr
+        .filter((e) => e)
+        .map((e) => e!.value)
+        .join(" OR ")
+    })`;
     return new Where(sql, []);
   }
 }
