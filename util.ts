@@ -72,7 +72,12 @@ function formatDate(date: Date) {
     .getSeconds()
     .toString()
     .padStart(2, "0");
-  return `${year}-${month}-${days} ${hours}:${minutes}:${seconds}`;
+  // Date does not support microseconds precision, so we only keep the milliseconds part.
+  const milliseconds = date
+    .getMilliseconds()
+    .toString()
+    .padStart(3, "0");
+  return `${year}-${month}-${days} ${hours}:${minutes}:${seconds}.${milliseconds}`;
 }
 
 function escapeString(str: string) {
