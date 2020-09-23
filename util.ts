@@ -14,14 +14,13 @@ export function replaceParams(sql: string, params: any | any[]): string {
         return `(${val.map((item) => replaceParams("??", [item])).join(",")})`;
       } else if (val === "*") {
         return val;
-      } else if (typeof val === "string" && val.indexOf(".") > -1) {
+      } else if (typeof val === "string" && val.includes(".")) {
         // a.b => `a`.`b`
         const _arr = val.split(".");
         return replaceParams(_arr.map(() => "??").join("."), _arr);
       } else if (
         typeof val === "string" &&
-        (val.toLowerCase().indexOf(" as ") > -1 ||
-          val.toLowerCase().indexOf(" AS ") > -1)
+        (val.includes(" as ") || val.includes(" AS "))
       ) {
         // a as b => `a` AS `b`
         const newVal = val.replace(" as ", " AS ");
@@ -81,5 +80,5 @@ function formatDate(date: Date) {
 }
 
 function escapeString(str: string) {
-  return str.replace(/"/g, '\\"');
+  return str.replaceAll("\\", "\\\\").replaceAll('"', '\\"');
 }
