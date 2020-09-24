@@ -32,8 +32,10 @@ test("testIdReplace", function () {
   assertEquals(replaceParams("??", [1]), "`1`");
   assertEquals(replaceParams("??", [true]), "`true`");
   assertEquals(replaceParams("?", ["string"]), `"string"`);
+  assertEquals(replaceParams("?", ["str\\ing"]), `"str\\\\ing"`);
   assertEquals(replaceParams("?", [123]), `123`);
   assertEquals(replaceParams("?", [`"test"`]), '"\\"test\\""');
+  assertEquals(replaceParams("?", [`\\"test"`]), '"\\\\\\"test\\""');
   assertEquals(replaceParams("?", [["a", "b", "c", "d"]]), '("a","b","c","d")');
   assertEquals(replaceParams("?", [[1, 2, 3, 4]]), "(1,2,3,4)");
   assertEquals(replaceParams("??", [["a", "b", "c"]]), "(`a`,`b`,`c`)");
