@@ -188,6 +188,22 @@ export class Query {
     return this;
   }
 
+  clone() {
+    const c = new Query();
+    c._type = this._type;
+    c._table = this._table;
+    c._where = this._where;
+    c._joins = this._joins;
+    c._orders = this._orders;
+    c._fields = this._fields;
+    c._groupBy = this._groupBy;
+    c._having = this._having;
+    c._insertValues = this._insertValues;
+    c._updateValue = this._updateValue;
+    c._limit = this._limit;
+    return c;
+  }
+
   build(): string {
     assert(!!this._table);
     switch (this._type) {

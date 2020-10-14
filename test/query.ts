@@ -177,3 +177,14 @@ test("testQuerySelectLimit", function () {
     'SELECT * FROM `users` WHERE `id` > 1 AND `name` LIKE "%n%" LIMIT 0, 10',
   );
 });
+
+test("testQueryClone", function () {
+  const builder = new Query();
+  builder.table("users");
+  const clonedBuilder = builder.clone();
+  const clonedSql = clonedBuilder.select("gender", "avatar").build();
+  const sql = builder.select("name", "id").build();
+
+  assertEquals(sql.trim(), "SELECT `name`, `id` FROM `users`");
+  assertEquals(clonedSql.trim(), "SELECT `gender`, `avatar` FROM `users`");
+});
