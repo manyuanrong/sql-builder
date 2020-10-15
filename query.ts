@@ -189,19 +189,19 @@ export class Query {
   }
 
   clone() {
-    const c = new Query();
-    c._type = this._type;
-    c._table = this._table;
-    c._where = this._where;
-    c._joins = this._joins;
-    c._orders = this._orders;
-    c._fields = this._fields;
-    c._groupBy = this._groupBy;
-    c._having = this._having;
-    c._insertValues = this._insertValues;
-    c._updateValue = this._updateValue;
-    c._limit = this._limit;
-    return c;
+    const newQuery = new Query();
+    newQuery._type = this._type;
+    newQuery._table = this._table;
+    newQuery._where = this._where;
+    newQuery._joins = this._joins;
+    newQuery._orders = this._orders;
+    newQuery._fields = this._fields;
+    newQuery._groupBy = this._groupBy;
+    newQuery._having = this._having;
+    newQuery._insertValues = this._insertValues;
+    newQuery._updateValue = this._updateValue;
+    newQuery._limit = this._limit;
+    return newQuery;
   }
 
   build(): string {
