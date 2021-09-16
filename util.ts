@@ -1,7 +1,7 @@
 export function replaceParams(sql: string, params: any | any[]): string {
   if (!params) return sql;
   let paramIndex = 0;
-  sql = sql.replace(/(".+?")|('.+?')|(\?\?)|(\?)/g, (str) => {
+  sql = sql.replace(/('[^'\\]*(?:\\.[^'\\]*)*')|("[^"\\]*(?:\\.[^"\\]*)*")|(\?\?)|(\?)/g, (str) => {
     if (paramIndex >= params.length) return str;
     // ignore
     if (/".*"/g.test(str) || /'.*'/g.test(str)) {
