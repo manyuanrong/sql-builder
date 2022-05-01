@@ -39,6 +39,7 @@ export function replaceParams(sql: string, params: any | any[]): string {
         if (val instanceof Array) {
           return `(${val.map((item) => replaceParams("?", [item])).join(",")})`;
         }
+        throw new Error(`Unsupported argument type in your sql query: ${val.constructor.name}`);
       case "string":
         return `"${escapeString(val)}"`;
       case "undefined":
