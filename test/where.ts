@@ -45,11 +45,11 @@ test("testWhereLte", function () {
   assertEquals(Where.field("age").lte(10).value, sql);
 });
 
-test("testWhereNotNull", function () {
-  const sql = "`age` NOT NULL";
-  assertEquals(Where.expr("?? NOT NULL", "age").value, sql);
-  assertEquals(Where.notNull("age").value, sql);
-  assertEquals(Where.field("age").notNull().value, sql);
+test("testWhereIsNotNull", function () {
+  const sql = "`age` IS NOT NULL";
+  assertEquals(Where.expr("?? IS NOT NULL", "age").value, sql);
+  assertEquals(Where.isNotNull("age").value, sql);
+  assertEquals(Where.field("age").isNotNull().value, sql);
 });
 
 test("testWhereIsNull", function () {
