@@ -60,10 +60,6 @@ export class Where {
     return this.expr("?? IS NULL", field);
   }
 
-  static notNull(field: string) {
-    return this.expr("?? NOT NULL", field);
-  }
-
   static isNotNull(field: string) {
     return this.expr("?? IS NOT NULL", field);
   }
