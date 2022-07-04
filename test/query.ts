@@ -23,7 +23,14 @@ test("testQueryInsert", function () {
 
   assertEquals(
     sql.trim(),
-    'INSERT INTO `users` (`name`,`password`,`id`) VALUES ("Enok","foo",1) ("Man","bar",2)',
+    'INSERT INTO `users` (`name`,`password`,`id`) VALUES ("Enok","foo",1),("Man","bar",2)',
+  );
+
+  const sql2 = builder.table("users").insert(records[0]).build();
+
+  assertEquals(
+    sql2.trim(),
+    'INSERT INTO `users` (`name`,`password`,`id`) VALUES ("Enok","foo",1)',
   );
 });
 
