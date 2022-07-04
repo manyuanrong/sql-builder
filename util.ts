@@ -1,4 +1,8 @@
-export function replaceParams(sql: string, params: any | any[]): string {
+type SupportTypeElement = string | Date | number | boolean | null | undefined
+// Array
+type SupportType = SupportTypeElement | SupportTypeElement[]
+
+export function replaceParams(sql: string, params?: null | SupportType[]): string {
   if (!params) return sql;
   let paramIndex = 0;
   sql = sql.replace(/('[^'\\]*(?:\\.[^'\\]*)*')|("[^"\\]*(?:\\.[^"\\]*)*")|(\?\?)|(\?)/g, (str) => {
@@ -46,7 +50,7 @@ export function replaceParams(sql: string, params: any | any[]): string {
       case "number":
       case "boolean":
       default:
-        return val;
+        return `${val}`;
     }
   });
   return sql;
