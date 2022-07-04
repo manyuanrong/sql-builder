@@ -1,5 +1,4 @@
-import { assertEquals, replaceParams } from "../deps.ts";
-
+import { assertEquals, assertThrows, replaceParams } from "../deps.ts";
 const { test } = Deno;
 
 test("testReplaceDate", function () {
@@ -10,7 +9,7 @@ test("testReplaceDate", function () {
   assertEquals(replaceParams("?", [dateWithMS]), `"2020-07-04 12:51:53.728"`);
 });
 
-test("testIdReplace", function () {
+test("testIdReplace", async function () {
   assertEquals(
     replaceParams(`'??' "??" ?? ?`, ["a", "b"]),
     `'??' "??" \`a\` "b"`,
@@ -55,4 +54,6 @@ test("testIdReplace", function () {
     query,
     'select `name`, `email` from `users` where `id` = 1 and `name` = "manyuanrong" and is_admin = true',
   );
+
+  assertThrows(() => replaceParams("?", [{}]), Error);
 });
