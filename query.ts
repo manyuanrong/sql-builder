@@ -20,24 +20,32 @@ export class Query {
     if (this._orders && this._orders.length) {
       return `ORDER BY ` + this._orders.map((order) => order.value).join(", ");
     }
+
+    return "";
   }
 
   private get whereSQL() {
     if (this._where && this._where.length) {
       return `WHERE ` + this._where.join(" AND ");
     }
+
+    return "";
   }
 
   private get havingSQL() {
     if (this._having && this._having.length) {
       return `HAVING ` + this._having.join(" AND ");
     }
+
+    return "";
   }
 
   private get joinSQL() {
     if (this._joins && this._joins.length) {
       return this._joins.join(" ");
     }
+
+    return "";
   }
 
   private get groupSQL() {
@@ -47,11 +55,15 @@ export class Query {
         this._groupBy.map((f) => replaceParams("??", [f])).join(", ")
       );
     }
+
+    return "";
   }
   private get limitSQL() {
     if (this._limit) {
       return `LIMIT ${this._limit.start}, ${this._limit.size}`;
     }
+
+    return "";
   }
 
   private get selectSQL() {
@@ -77,7 +89,7 @@ export class Query {
     const values = this._insertValues.map((row) => {
       return fields.map((key) => row[key]!);
     });
-    return replaceParams(`INSERT INTO ?? ?? VALUES ${"? ".repeat(len)}`, [
+    return replaceParams(`INSERT INTO ?? ?? VALUES ${Array(len).fill("?").join()}`, [
       this._table,
       fields,
       ...values,
