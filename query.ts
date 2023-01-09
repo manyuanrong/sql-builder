@@ -1,10 +1,10 @@
-import { assert, replaceParams } from "./deps.ts";
-import { Order } from "./order.ts";
-import { Where } from "./where.ts";
-import { Join } from "./join.ts";
+import { assert, replaceParams } from './deps.ts';
+import { Order } from './order.ts';
+import { Where } from './where.ts';
+import { Join } from './join.ts';
 
 export class Query {
-  private _type?: "select" | "insert" | "update" | "delete";
+  private _type?: 'select' | 'insert' | 'update' | 'delete';
   private _table?: string;
   private _where: string[] = [];
   private _joins: string[] = [];
@@ -18,33 +18,33 @@ export class Query {
 
   private get orderSQL() {
     if (this._orders && this._orders.length) {
-      return `ORDER BY ` + this._orders.map((order) => order.value).join(", ");
+      return `ORDER BY ` + this._orders.map((order) => order.value).join(', ');
     }
   }
 
   private get whereSQL() {
     if (this._where && this._where.length) {
-      return `WHERE ` + this._where.join(" AND ");
+      return `WHERE ` + this._where.join(' AND ');
     }
   }
 
   private get havingSQL() {
     if (this._having && this._having.length) {
-      return `HAVING ` + this._having.join(" AND ");
+      return `HAVING ` + this._having.join(' AND ');
     }
   }
 
   private get joinSQL() {
     if (this._joins && this._joins.length) {
-      return this._joins.join(" ");
+      return this._joins.join(' ');
     }
   }
 
   private get groupSQL() {
     if (this._groupBy && this._groupBy.length) {
       return (
-        "GROUP BY " +
-        this._groupBy.map((f) => replaceParams("??", [f])).join(", ")
+        'GROUP BY ' +
+        this._groupBy.map((f) => replaceParams('??', [f])).join(', ')
       );
     }
   }
@@ -56,10 +56,10 @@ export class Query {
 
   private get selectSQL() {
     return [
-      "SELECT",
-      this._fields.join(", "),
-      "FROM",
-      replaceParams("??", [this._table]),
+      'SELECT',
+      this._fields.join(', '),
+      'FROM',
+      replaceParams('??', [this._table]),
       this.joinSQL,
       this.whereSQL,
       this.groupSQL,
@@ -68,7 +68,7 @@ export class Query {
       this.limitSQL,
     ]
       .filter((str) => str)
-      .join(" ");
+      .join(' ');
   }
 
   private get insertSQL() {
@@ -77,11 +77,10 @@ export class Query {
     const values = this._insertValues.map((row) => {
       return fields.map((key) => row[key]!);
     });
-    return replaceParams(`INSERT INTO ?? ?? VALUES ${"? ".repeat(len)}`, [
-      this._table,
-      fields,
-      ...values,
-    ]);
+    return replaceParams(
+      `INSERT INTO ?? ?? VALUES ${values.map((v) => `?`).join(', ')}`,
+      [this._table, fields, ...values]
+    );
   }
 
   private get updateSQL() {
@@ -90,16 +89,16 @@ export class Query {
       .map((key) => {
         return replaceParams(`?? = ?`, [key, this._updateValue[key]]);
       })
-      .join(", ");
+      .join(', ');
     return [
       replaceParams(`UPDATE ?? SET ${set}`, [this._table]),
       this.whereSQL,
-    ].join(" ");
+    ].join(' ');
   }
 
   private get deleteSQL() {
     return [replaceParams(`DELETE FROM ??`, [this._table]), this.whereSQL].join(
-      " ",
+      ' '
     );
   }
 
@@ -119,7 +118,7 @@ export class Query {
   }
 
   where(where: Where | string) {
-    if (typeof where === "string") {
+    if (typeof where === 'string') {
       this._where.push(where);
     } else {
       this._where.push(where.value);
@@ -128,7 +127,7 @@ export class Query {
   }
 
   having(where: Where | string) {
-    if (typeof where === "string") {
+    if (typeof where === 'string') {
       this._having.push(where);
     } else {
       this._having.push(where.value);
@@ -142,7 +141,7 @@ export class Query {
   }
 
   join(join: Join | string) {
-    if (typeof join === "string") {
+    if (typeof join === 'string') {
       this._joins.push(join);
     } else {
       this._joins.push(join.value);
@@ -151,24 +150,24 @@ export class Query {
   }
 
   select(...fields: string[]) {
-    this._type = "select";
+    this._type = 'select';
     assert(fields.length > 0);
     this._fields = this._fields.concat(
       fields.map((field) => {
-        if (field.toLocaleLowerCase().indexOf(" as ") > -1) {
+        if (field.toLocaleLowerCase().indexOf(' as ') > -1) {
           return field;
-        } else if (field.split(".").length > 1) {
-          return replaceParams("??.??", field.split("."));
+        } else if (field.split('.').length > 1) {
+          return replaceParams('??.??', field.split('.'));
         } else {
-          return replaceParams("??", [field]);
+          return replaceParams('??', [field]);
         }
-      }),
+      })
     );
     return this;
   }
 
   insert(data: Object[] | Object) {
-    this._type = "insert";
+    this._type = 'insert';
     if (!(data instanceof Array)) {
       data = [data];
     }
@@ -177,14 +176,14 @@ export class Query {
   }
 
   update(data: Object) {
-    this._type = "update";
+    this._type = 'update';
     this._updateValue = data;
     return this;
   }
 
   delete(table?: string) {
     if (table) this._table = table;
-    this._type = "delete";
+    this._type = 'delete';
     return this;
   }
 
@@ -207,16 +206,16 @@ export class Query {
   build(): string {
     assert(!!this._table);
     switch (this._type) {
-      case "select":
+      case 'select':
         return this.selectSQL;
-      case "insert":
+      case 'insert':
         return this.insertSQL;
-      case "update":
+      case 'update':
         return this.updateSQL;
-      case "delete":
+      case 'delete':
         return this.deleteSQL;
       default:
-        return "";
+        return '';
     }
   }
 }

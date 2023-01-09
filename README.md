@@ -44,7 +44,7 @@ test(function testQueryInsert() {
 
   assertEquals(
     sql.trim(),
-    'INSERT INTO `users` (`name`,`password`,`id`) VALUES ("Enok","foo",1) ("Man","bar",2)'
+    'INSERT INTO `users` (`name`,`password`,`id`) VALUES ("Enok","foo",1), ("Man","bar",2)'
   );
 });
 
